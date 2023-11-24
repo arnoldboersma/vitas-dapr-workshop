@@ -1,10 +1,24 @@
+using System.Text.Json;
 using frontend.Components;
+using frontend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddSingleton<SummaryRequestService>();
+
+
+builder.Services.AddDaprClient(client =>
+{
+    client.UseJsonSerializationOptions(new JsonSerializerOptions()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        PropertyNameCaseInsensitive = true
+    });
+});
 
 var app = builder.Build();
 
@@ -16,7 +30,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();

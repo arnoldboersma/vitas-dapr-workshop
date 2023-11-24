@@ -1,8 +1,21 @@
 {
   "version": 2,
-  "dgSpecHash": "g0hJPcCqEmE0IA1z+QYwmDOhgphKJviSxWI7eK+Ij9NqA4uaCt40T2EqRG1/gH0rmzsmBj49UMCsub8wB/H2NA==",
+  "dgSpecHash": "EZA5TCP1dJps35CsdkbCsmhezNhYo5Ws2/cxo82F+K2zgdJCT/jlQijqF4Kr1Ag3ibH2BF+UX+7FlgVzFjohAA==",
   "success": true,
   "projectFilePath": "/workspaces/vitas-dapr-workshop/src/frontend/frontend.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/vscode/.nuget/packages/dapr.aspnetcore/1.12.0/dapr.aspnetcore.1.12.0.nupkg.sha512",
+    "/home/vscode/.nuget/packages/dapr.client/1.12.0/dapr.client.1.12.0.nupkg.sha512",
+    "/home/vscode/.nuget/packages/google.api.commonprotos/2.2.0/google.api.commonprotos.2.2.0.nupkg.sha512",
+    "/home/vscode/.nuget/packages/google.protobuf/3.15.0/google.protobuf.3.15.0.nupkg.sha512",
+    "/home/vscode/.nuget/packages/grpc.core.api/2.52.0/grpc.core.api.2.52.0.nupkg.sha512",
+    "/home/vscode/.nuget/packages/grpc.net.client/2.52.0/grpc.net.client.2.52.0.nupkg.sha512",
+    "/home/vscode/.nuget/packages/grpc.net.common/2.52.0/grpc.net.common.2.52.0.nupkg.sha512",
+    "/home/vscode/.nuget/packages/microsoft.extensions.logging.abstractions/3.0.3/microsoft.extensions.logging.abstractions.3.0.3.nupkg.sha512",
+    "/home/vscode/.nuget/packages/system.io.pipelines/4.7.2/system.io.pipelines.4.7.2.nupkg.sha512",
+    "/home/vscode/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
+    "/home/vscode/.nuget/packages/system.net.http.json/5.0.0/system.net.http.json.5.0.0.nupkg.sha512",
+    "/home/vscode/.nuget/packages/system.runtime.compilerservices.unsafe/4.5.2/system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512"
+  ],
   "logs": []
 }

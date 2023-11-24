@@ -1,0 +1,28 @@
+version: 1
+common:
+  resourcesPath: dapr/local/components
+  env:
+    DEBUG: true
+apps:
+  - appID: summarizer-frontend
+    appDirPath: ./src/frontend/
+    appPort: 11000
+    command: ["dotnet", "run"]
+    env:
+      PUBSUB_REQUESTS_NAME: "summarizer-pubsub"
+      PUBSUB_REQUESTS_TOPIC: "link-to-summarize"
+      REQUESTS_API_APP_ID: "summarizer-requests-api"
+      REQUESTS_API_ENDPOINT: "requests"
+      DOTNET_URLS: "http://*:11000"
+      ASPNETCORE_ENVIRONMENT: "Development"
+  - appID: summarizer-api
+    appDirPath: ./src/api/
+    appPort: 12000
+    command: ["dotnet", "run"]
+    env:
+      PUBSUB_REQUESTS_NAME: "summarizer-pubsub"
+      PUBSUB_REQUESTS_TOPIC: "link-to-summarize"
+      REQUESTS_API_APP_ID: "summarizer-requests-api"
+      REQUESTS_API_ENDPOINT: "requests"
+      DOTNET_URLS: "http://*:12000"
+      ASPNETCORE_ENVIRONMENT: "Development"
