@@ -10,5 +10,5 @@ app.MapPost("/orders", (Order order) =>
     return order.ToString();
 });
 
-app.RunAsync();
+app.Run();
 public record Order(int orderId);

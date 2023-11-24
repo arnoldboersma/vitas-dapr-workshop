@@ -39,3 +39,6 @@ set_dapr_config
 #pip install -r ./src/requests-processor/requirements.txt
 #dotnet restore ./src/frontend/Frontend.csproj
 #(cd ./src/job/ && cargo build)
+
+dotnet restore .
+dotnet build .
