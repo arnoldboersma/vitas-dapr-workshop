@@ -7,7 +7,7 @@ app.MapGet("/", () => "Hello World!");
 app.MapPost("/orders", (Order order) =>
 {
     Console.WriteLine("Order received : " + order);
-    return order.ToString();
+    return order;
 });
 
 app.Run();

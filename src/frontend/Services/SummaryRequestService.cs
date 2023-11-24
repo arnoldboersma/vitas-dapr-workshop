@@ -17,7 +17,7 @@ public class SummaryRequestService
         this._logger = Logger;
     }
 
-    public async Task<string> GetSummaryRequestsAsync()
+    public async Task<Order> GetSummaryRequestsAsync()
     {
         var order = new Order(2);
         var orderJson = JsonSerializer.Serialize(order);
@@ -26,10 +26,12 @@ public class SummaryRequestService
         HttpRequestMessage? response = this._daprClient.CreateInvokeMethodRequest(
             HttpMethod.Post,
             "summarizer-api",
-            "/orders", 
+            "orders",
             content
         );
-        return await this._daprClient.InvokeMethodAsync<string>(response);
+        var s = await this._daprClient.InvokeMethodAsync<Order>(response);
+        Console.WriteLine(s);
+        return s;
     }
 }
 

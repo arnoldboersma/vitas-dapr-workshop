@@ -39,7 +39,9 @@
           "ms-python.python",
           "GitHub.copilot",
           "ms-azuretools.vscode-bicep",
-          "ms-dotnettools.csdevkit"
+          "ms-dotnettools.csdevkit",
+          "mutantdino.resourcemonitor",
+          "humao.rest-client"
       ]
       }
     }
