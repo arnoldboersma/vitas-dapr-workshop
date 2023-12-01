@@ -7,22 +7,30 @@ apps:
   - appID: summarizer-frontend
     appDirPath: ./src/frontend/
     appPort: 11000
-    command: ["dotnet", "run"]
+    command: ["dotnet", "watch"]
     env:
       PUBSUB_REQUESTS_NAME: "summarizer-pubsub"
       PUBSUB_REQUESTS_TOPIC: "link-to-summarize"
-      REQUESTS_API_APP_ID: "summarizer-requests-api"
+      REQUESTS_API_APP_ID: "summarizer-api"
       REQUESTS_API_ENDPOINT: "requests"
       DOTNET_URLS: "http://*:11000"
       ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER: "true"
   - appID: summarizer-api
     appDirPath: ./src/api/
     appPort: 12000
-    command: ["dotnet", "run"]
+    command: ["dotnet", "watch"]
     env:
-      PUBSUB_REQUESTS_NAME: "summarizer-pubsub"
-      PUBSUB_REQUESTS_TOPIC: "link-to-summarize"
-      REQUESTS_API_APP_ID: "summarizer-requests-api"
-      REQUESTS_API_ENDPOINT: "requests"
       DOTNET_URLS: "http://*:12000"
       ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER: "true"
+  - appID: summarizer-worker
+    appDirPath: ./src/worker/
+    appPort: 13000
+    command: ["dotnet", "watch"]
+    env:
+      DOTNET_URLS: "http://*:13000"
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER: "true"
+      PUBSUB_REQUESTS_NAME: "summarizer-pubsub"
+      PUBSUB_REQUESTS_TOPIC: "link-to-summarize"

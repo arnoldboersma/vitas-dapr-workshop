@@ -1,14 +1,23 @@
+using api;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
 
-app.MapPost("/orders", (Order order) =>
+app.MapGet("/requests", () =>
 {
-    Console.WriteLine("Order received : " + order);
-    return order;
+    return new SummaryRequest[]
+    {
+        new()
+        {
+            Email = "ab@test.com",
+            Url = "https://www.test.com",
+            Summary = "Test summary",
+            Id = "1"
+        }
+    };
 });
 
 app.Run();
-public record Order(int orderId);

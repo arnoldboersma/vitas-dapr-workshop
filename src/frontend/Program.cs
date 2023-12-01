@@ -1,6 +1,7 @@
 using System.Text.Json;
-using frontend.Components;
-using frontend.Services;
+using Frontend;
+using Frontend.Components;
+using Frontend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +10,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddSingleton<SummaryRequestService>();
-
-
+builder.Services.AddSingleton<AppSettings>();
 builder.Services.AddDaprClient(client =>
 {
     client.UseJsonSerializationOptions(new JsonSerializerOptions()

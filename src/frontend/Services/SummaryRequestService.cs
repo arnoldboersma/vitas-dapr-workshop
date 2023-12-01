@@ -1,38 +1,32 @@
-namespace frontend.Services;
-
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+namespace Frontend.Services;
 using Dapr.Client;
 
-public class SummaryRequestService
+public class SummaryRequestService(DaprClient daprClient, AppSettings settingsService, ILogger<SummaryRequestService> Logger)
 {
-    private readonly DaprClient _daprClient;
+    private readonly DaprClient _daprClient = daprClient;
+    private readonly AppSettings _settings = settingsService;
+    private readonly ILogger<SummaryRequestService> _logger = Logger;
 
-    private readonly ILogger<SummaryRequestService> _logger;
-
-    public SummaryRequestService(DaprClient daprClient, ILogger<SummaryRequestService> Logger)
+    public async Task AddSummaryRequestAsync(NewSummaryRequestPayload newSummaryRequest)
     {
-        this._daprClient = daprClient;
-        this._logger = Logger;
+        CancellationTokenSource source = new CancellationTokenSource();
+        CancellationToken cancellationToken = source.Token;
+
+        await this._daprClient.PublishEventAsync(
+            _settings.PubRequestName,
+            _settings.PubRequestTopic,
+            newSummaryRequest,
+            cancellationToken
+        );
     }
 
-    public async Task<Order> GetSummaryRequestsAsync()
+    public async Task<SummaryRequest[]> GetSummaryRequestsAsync()
     {
-        var order = new Order(2);
-        var orderJson = JsonSerializer.Serialize(order);
-        var content = new StringContent(orderJson, Encoding.UTF8, "application/json");
-
         HttpRequestMessage? response = this._daprClient.CreateInvokeMethodRequest(
-            HttpMethod.Post,
-            "summarizer-api",
-            "orders",
-            content
+            HttpMethod.Get,
+            _settings.requestsApiAppId,
+            _settings.requestsApiEndpoint
         );
-        var s = await this._daprClient.InvokeMethodAsync<Order>(response);
-        Console.WriteLine(s);
-        return s;
+        return await this._daprClient.InvokeMethodAsync<SummaryRequest[]>(response);
     }
 }
-
-public record Order([property: JsonPropertyName("orderId")] int OrderId);

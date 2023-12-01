@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Frontend</RootNamespace>
+    <RootNamespace>Worker</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
