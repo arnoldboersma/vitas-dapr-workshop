@@ -23,7 +23,10 @@ app.MapSubscribeHandler();
 app.MapGet("/", () => "Hello World!")
 .WithOpenApi();
 
-app.MapPost("/orders", [Topic("summarizer-pubsub", "link-to-summarize")] (NewSummaryRequestPayload newSummaryRequestPayload) => {
+// todo settings from environment, add to new class
+
+
+app.MapPost("/summarize", [Topic("summarizer-pubsub", "link-to-summarize")] (NewSummaryRequestPayload newSummaryRequestPayload) => {
     Console.WriteLine("Subscriber received : " + newSummaryRequestPayload);
     return Results.Ok(newSummaryRequestPayload);
 })
