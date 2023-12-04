@@ -10,7 +10,7 @@ public record SummaryRequest
     [JsonPropertyName("url")]
     public required string Url { get; init; }
 
-    [JsonPropertyName("url-hashed")]
+    [JsonPropertyName("url_hashed")]
     public required string UrlHashed { get; init; }
 
     [JsonPropertyName("summary")]

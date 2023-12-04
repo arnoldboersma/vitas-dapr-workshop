@@ -10,6 +10,7 @@ public class SummarizeRequestService(DaprClient daprClient, AppSettings appSetti
 
     public async Task<SummaryRequest> CreateSummaryRequestAsync(NewSummarizeRequest newSummarizeRequest)
     {
+        Dictionary<string, string> metadata = new() { { "contentType", "application/json" } };
         var request = new SummaryRequest
         {
             Id = Guid.NewGuid(),
@@ -19,25 +20,36 @@ public class SummarizeRequestService(DaprClient daprClient, AppSettings appSetti
             Summary = newSummarizeRequest.Summary,
         };
 
-        await this.daprClient.SaveStateAsync(appSettings.StateStoreName, request.Id.ToString(), request);
+        await this.daprClient.SaveStateAsync(appSettings.StateStoreName, request.Id.ToString(), request, metadata: metadata);
 
         return request;
     }
 
     public async Task<List<SummaryRequest>> GetSummaryRequestsAsync(CancellationToken ct = default)
     {
-        var query = """
-            {
-                "page": {
-                    "limit": 100
+        var query1 = """
+        {
+            "page": {
+                "limit": 100
+            }
+        }
+        """;
+
+        var query2 = """
+        {
+            "page": {
+                "limit": 100
+            },
+            "filter": {
+                "EQ": {
+                    "url_hashed": "774448577"
                 }
             }
+        }
         """;
 
         Dictionary<string, string> metadata = new() { { "contentType", "application/json" }, { "queryIndexName", this.appSettings.StateStoreQueryIndexName } };
-        var queryResult = await daprClient.QueryStateAsync<SummaryRequest>(appSettings.StateStoreName, query, cancellationToken: ct, metadata: metadata);
-
-        // todo handle error's and multiple pages of results
+        var queryResult = await daprClient.QueryStateAsync<SummaryRequest>(appSettings.StateStoreName, query1, cancellationToken: ct, metadata: metadata);
         return queryResult.Results.Select(s => s.Data).ToList();
     }
 
