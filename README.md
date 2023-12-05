@@ -2,6 +2,12 @@
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/arnoldboersma/vitas-dapr-workshop)
 
 
+## Prepare OpenAI
+- TODO Create Azure OpenAI resource
+- Open Azure AI studio 
+Create model with name: `aca-dapr-gpt-35-turbo-01`
+![openaimodel](docs/images/openaimodel.png)
+
 ## Start app
 
 ```bash
@@ -26,3 +32,11 @@ Output logs from the application and dapr are stored in each application in the 
 
 ### Zipkin
 ![Zipkin](docs/images/zipkin.png)
+
+## Troubleshoot
+- Sometimes the Redis container crashes, check the status of the doc ker container with 
+```bash
+docker ps
+```
+Or use the Docker plugin.
+![container](docs/images/container.png)

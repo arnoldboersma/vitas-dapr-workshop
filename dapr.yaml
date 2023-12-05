@@ -36,3 +36,5 @@ apps:
       DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER: "true"
       PUBSUB_REQUESTS_NAME: "summarizer-pubsub"
       PUBSUB_REQUESTS_TOPIC: "link-to-summarize"
+      SECRET_STORE_NAME: "summarizer-secretstore"
+      OPENAI_API_DEPLOYMENT_NAME: "aca-dapr-gpt-35-turbo-01"

@@ -11,6 +11,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddSingleton<SummaryRequestService>();
 builder.Services.AddSingleton<AppSettings>();
+
 builder.Services.AddDaprClient(client =>
 {
     client.UseJsonSerializationOptions(new JsonSerializerOptions()
