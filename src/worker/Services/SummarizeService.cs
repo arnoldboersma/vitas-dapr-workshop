@@ -43,23 +43,23 @@ public class SummarizeService(DaprClient daprClient, AppSettings appSettings)
 
         var openAIClient = new OpenAIClient(new Uri(endPoint), new AzureKeyCredential(key));
         var url = newSummaryRequestPayload.Url;
-        Console.WriteLine($"Url: {url}");
         string summarizationPrompt = @$"
-            Summarize the article '{url}' in english in less than two paragraphs without adding new information. When the summary seems too short to make at least one paragraph, answer that you can't summarize a text that is too short.
+            Summarize the article {url} in english in less than two paragraphs without adding new information. When the summary seems too short to make at least one paragraph, answer that you can't summarize a text that is too short
         ";
 
-        var completionsOptions = new CompletionsOptions()
+        CompletionsOptions completionsOptions = new()
         {
             DeploymentName = appSettings.OpenAIDeploymentName,
             Prompts = { summarizationPrompt },
-            MaxTokens = 200,
-            Temperature = 0.9f,
+            MaxTokens = 100,
+            Temperature = 1f,
+            NucleusSamplingFactor = 0.5f,
             FrequencyPenalty = 0,
-            PresencePenalty = 0.6f,
+            PresencePenalty = 0,
         };
-        var completionsResponse  = await openAIClient.GetCompletionsAsync(completionsOptions, cancellationToken);
+        var completionsResponse  = await
+            openAIClient.GetCompletionsAsync(completionsOptions, cancellationToken);
         string completion = completionsResponse.Value.Choices[0].Text;
-
-        return completion;
+        return completion ?? "No summary found";
     }
 }
