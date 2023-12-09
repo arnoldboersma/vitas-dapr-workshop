@@ -37,6 +37,9 @@ apps:
   #     PUBSUB_REQUESTS_NAME: "summarizer-pubsub"
   #     PUBSUB_REQUESTS_TOPIC: "link-to-summarize"
   #     SECRET_STORE_NAME: "summarizer-secretstore"
+  #     REQUESTS_API_APP_ID: "summarizer-api"
+  #     REQUESTS_API_SEARCH_ENDPOINT: "search-requests-by-url"
+  #     REQUESTS_API_CREATE_ENDPOINT: "requests"
   #     OPENAI_API_DEPLOYMENT_NAME: "aca-dapr-gpt-35-turbo-01"
   - appID: summarizer-requests-processor
     appDirPath: ./src/requests-processor/
@@ -46,7 +49,7 @@ apps:
       SECRET_STORE_NAME: "summarizer-secretstore"
       PUBSUB_REQUESTS_NAME: "summarizer-pubsub"
       PUBSUB_REQUESTS_TOPIC: "link-to-summarize"
-      REQUESTS_API_APP_ID: "summarizer-requests-api"
+      REQUESTS_API_APP_ID: "summarizer-api"
       REQUESTS_API_SEARCH_ENDPOINT: "search-requests-by-url"
       REQUESTS_API_CREATE_ENDPOINT: "requests"
       OPENAI_API_VERSION: "2022-12-01"

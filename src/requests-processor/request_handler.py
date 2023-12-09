@@ -28,11 +28,11 @@ class SummarizeRequestHandler:
         #         f"Get summary from state for {self.event.data.url}")
         #     summary = request["summary"]
 
-        # resp = await self.dapr_client.invoke_method_async(
-        #     self.settings.requests_api_app_id,
-        #     self.settings.requests_api_create_endpoint,
-        #     json.dumps({'url': self.event.data.url, 'email': self.event.data.email, 'summary': summary}),
-        #     http_verb="POST")
+        resp = await self.dapr_client.invoke_method_async(
+            self.settings.requests_api_app_id,
+            self.settings.requests_api_create_endpoint,
+            json.dumps({'url': self.event.data.url, 'email': self.event.data.email, 'summary': summary}),
+            http_verb="POST")
 
     async def __try_find_by_url(self, url):
         resp = await self.dapr_client.invoke_method_async(

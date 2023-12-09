@@ -12,18 +12,9 @@ public class SummarizeService(DaprClient daprClient, AppSettings appSettings)
 
     public async Task<string> SummarizeAsync(NewSummaryRequestPayload newSummaryRequestPayload, CancellationToken cancellationToken = default)
     {
-        Console.WriteLine("Subscriber received 2 : " + newSummaryRequestPayload);
         var summary = await GetSummarry(newSummaryRequestPayload, cancellationToken);
-        Console.WriteLine($"Summary: {summary}");
-        // var summaryResponse = new SummaryResponse()
-        // {
-        //     Id = Guid.NewGuid().ToString(),
-        //     Url = newSummaryRequestPayload.Url,
-        //     Summary = "This is a summary"
-        // };
-
-        // await daprClient.PublishEventAsync(appSettings.PubSubRequestsName, appSettings.PubSubRequestsTopic, summaryResponse);
-
+        var summaryResponse = new { url = newSummaryRequestPayload.Url, email = newSummaryRequestPayload.Email, summary = summary };
+        await daprClient.InvokeMethodAsync(appSettings.RequestsApiAppId, appSettings.RequestsApiCreateEndPoint, summaryResponse, cancellationToken);
         return summary;
     }
 
@@ -51,11 +42,11 @@ public class SummarizeService(DaprClient daprClient, AppSettings appSettings)
         {
             DeploymentName = appSettings.OpenAIDeploymentName,
             Prompts = { summarizationPrompt },
-            MaxTokens = 100,
-            Temperature = 1f,
-            NucleusSamplingFactor = 0.5f,
+            MaxTokens = 200,
+            Temperature = 0.9f,
+            NucleusSamplingFactor = 1f,
             FrequencyPenalty = 0,
-            PresencePenalty = 0,
+            PresencePenalty = 0.6f,
         };
         var completionsResponse  = await
             openAIClient.GetCompletionsAsync(completionsOptions, cancellationToken);
