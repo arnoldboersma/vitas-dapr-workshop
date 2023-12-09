@@ -36,4 +36,6 @@ set_dapr_config
 
 # Prefetch dependencies
 dotnet restore .
+pip install -r ./src/requests-processor/requirements.txt
+
 

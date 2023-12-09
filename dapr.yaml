@@ -26,15 +26,29 @@ apps:
       DOTNET_URLS: "http://*:12000"
       ASPNETCORE_ENVIRONMENT: "Development"
       DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER: "true"
-  - appID: summarizer-worker
-    appDirPath: ./src/worker/
+  # - appID: summarizer-worker
+  #   appDirPath: ./src/worker/
+  #   appPort: 13000
+  #   command: ["dotnet", "watch"]
+  #   env:
+  #     DOTNET_URLS: "http://*:13000"
+  #     ASPNETCORE_ENVIRONMENT: "Development"
+  #     DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER: "true"
+  #     PUBSUB_REQUESTS_NAME: "summarizer-pubsub"
+  #     PUBSUB_REQUESTS_TOPIC: "link-to-summarize"
+  #     SECRET_STORE_NAME: "summarizer-secretstore"
+  #     OPENAI_API_DEPLOYMENT_NAME: "aca-dapr-gpt-35-turbo-01"
+  - appID: summarizer-requests-processor
+    appDirPath: ./src/requests-processor/
     appPort: 13000
-    command: ["dotnet", "watch"]
+    command: ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "13000"]
     env:
-      DOTNET_URLS: "http://*:13000"
-      ASPNETCORE_ENVIRONMENT: "Development"
-      DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER: "true"
+      SECRET_STORE_NAME: "summarizer-secretstore"
       PUBSUB_REQUESTS_NAME: "summarizer-pubsub"
       PUBSUB_REQUESTS_TOPIC: "link-to-summarize"
-      SECRET_STORE_NAME: "summarizer-secretstore"
+      REQUESTS_API_APP_ID: "summarizer-requests-api"
+      REQUESTS_API_SEARCH_ENDPOINT: "search-requests-by-url"
+      REQUESTS_API_CREATE_ENDPOINT: "requests"
+      OPENAI_API_VERSION: "2022-12-01"
       OPENAI_API_DEPLOYMENT_NAME: "aca-dapr-gpt-35-turbo-01"
+      APP_PORT: 13000
