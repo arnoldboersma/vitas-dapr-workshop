@@ -31,20 +31,36 @@ if (app.Environment.IsDevelopment())
 app.MapGet("/", () => "Hello World!")
 .WithOpenApi();
 
-app.MapGet("/requests", async (SummarizeRequestService summarizeRequestService) =>
+app.MapGet("/requests", async (SummarizeRequestService summarizeRequestService, CancellationToken token) =>
 {
-    var results = await summarizeRequestService.GetSummaryRequestsAsync();
+    var results = await summarizeRequestService.GetSummaryRequestsAsync(token);
     app.Logger.LogInformation("Returning result {result}", results);
     return Results.Ok(results);
 })
 .WithOpenApi();
 
-app.MapPost("/requests", async (NewSummarizeRequest newSummarizeRequest, SummarizeRequestService summarizeRequestService) =>
+app.MapPost("/requests", async (NewSummarizeRequest newSummarizeRequest, SummarizeRequestService summarizeRequestService, CancellationToken token) =>
 {
-    var result = await summarizeRequestService.CreateSummaryRequestAsync(newSummarizeRequest);
+    var result = await summarizeRequestService.CreateSummaryRequestAsync(newSummarizeRequest, token);
     app.Logger.LogInformation("Returning result {result}", result);
     // return Ok without content 201
     return Results.Created($"/requests/{result.Id}", result);
+})
+.WithOpenApi();
+
+app.MapPost("/search-requests-by-url", async (SearcRequest searcRequest, SummarizeRequestService summarizeRequestService, CancellationToken token) =>
+{
+    var result = await summarizeRequestService.SearchSummaryRequestByUrlAsync(searcRequest, token);
+    app.Logger.LogInformation("Returning result {result}", result);
+
+    if (result is null)
+    {
+        return Results.NoContent();
+    }
+    else
+    {
+        return Results.Ok(result);
+    }
 })
 .WithOpenApi();
 

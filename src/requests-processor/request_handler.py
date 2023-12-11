@@ -15,18 +15,19 @@ class SummarizeRequestHandler:
         self.event = event
 
     async def run(self):
-        # logging.debug("Trying to find existing request in state")
-        # request = await self.__try_find_by_url(self.event.data.url)
+        logging.debug("Trying to find existing request in state")
+        request = await self.__try_find_by_url(self.event.data.url)
 
-        summary = await self.__get_summary(self.event.data.url)
-        # if not (request):
-        #     logging.info(
-        #         f"Azure Open AI requests for {self.event.data.url}")
-        #     summary = await self.__get_summary(self.event.data.url)
-        # else:
-        #     logging.info(
-        #         f"Get summary from state for {self.event.data.url}")
-        #     summary = request["summary"]
+        if not (request):
+            logging.info(
+                f"Azure Open AI requests for {self.event.data.url}")
+            summary = await self.__get_summary(self.event.data.url)
+        else:
+            logging.info(
+                f"Get summary from state for {self.event.data.url}")
+            logging.info(
+                f"request {request}")
+            summary = request["summary"]
 
         resp = await self.dapr_client.invoke_method_async(
             self.settings.requests_api_app_id,

@@ -34,7 +34,7 @@ Output logs from the application and dapr are stored in each application in the 
 ![Zipkin](docs/images/zipkin.png)
 
 ## Troubleshoot
-- Sometimes the Redis container crashes, check the status of the doc ker container with 
+- Sometimes the Redis container crashes, check the status of the docker container with 
 ```bash
 docker ps
 ```
