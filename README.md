@@ -7,6 +7,8 @@
 - Open Azure AI studio 
 Create model with name: `aca-dapr-gpt-35-turbo-01`
 ![openaimodel](docs/images/openaimodel.png)
+- get endpoint and key
+- copy .dapr/summarizer-secrets-sample.json to .dapr/summarizer-secrets.json and fill in the secret values
 
 ## Start app
 
