@@ -16,6 +16,14 @@ Create model with name: `aca-dapr-gpt-35-turbo-01`
 dapr run -f .
 ```
 
+Open the app on port 11000, 12000 and 13000 the api has an swagger endpoint on /swagger, if you run the application in a githubcodespace the url's can be found as follows:
+
+![Alt text](docs/images/port.png)
+
+> If a port is missing, you can manually add the port to be forwarded.
+> 
+> ![Alt text](docs/images/forewardport.png)
+
 ## Debug application
 
 ### Attach Debugger
