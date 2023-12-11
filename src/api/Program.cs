@@ -34,7 +34,7 @@ app.MapGet("/", () => "Hello World!")
 app.MapGet("/requests", async (SummarizeRequestService summarizeRequestService, CancellationToken token) =>
 {
     var results = await summarizeRequestService.GetSummaryRequestsAsync(token);
-    app.Logger.LogInformation("Returning result {result}", results);
+    app.Logger.LogInformation("Returning result {result}", results?.Count);
     return Results.Ok(results);
 })
 .WithOpenApi();
@@ -43,7 +43,6 @@ app.MapPost("/requests", async (NewSummarizeRequest newSummarizeRequest, Summari
 {
     var result = await summarizeRequestService.CreateSummaryRequestAsync(newSummarizeRequest, token);
     app.Logger.LogInformation("Returning result {result}", result);
-    // return Ok without content 201
     return Results.Created($"/requests/{result.Id}", result);
 })
 .WithOpenApi();
@@ -51,7 +50,7 @@ app.MapPost("/requests", async (NewSummarizeRequest newSummarizeRequest, Summari
 app.MapPost("/search-requests-by-url", async (SearcRequest searcRequest, SummarizeRequestService summarizeRequestService, CancellationToken token) =>
 {
     var result = await summarizeRequestService.SearchSummaryRequestByUrlAsync(searcRequest, token);
-    app.Logger.LogInformation("Returning result {result}", result);
+    app.Logger.LogInformation("Returning result {result}", result?.Id);
 
     if (result is null)
     {

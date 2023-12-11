@@ -68,12 +68,12 @@ public class SummarizeRequestService(DaprClient daprClient, AppSettings appSetti
 
     private static string GetHashedUrl(string url)
     {
-        var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(url.ToLowerInvariant()));
-        var builder = new StringBuilder();
-        foreach (var t in bytes)
-        {
-            builder.Append(t.ToString("x2"));
-        }
-        return builder.ToString();
+        var encoding = new System.Text.UTF8Encoding();
+        byte[] keyByte = encoding.GetBytes("secretkey");
+        byte[] dataBytes = encoding.GetBytes(url);
+
+        using var hmacsha256 = new HMACSHA256(keyByte);
+        byte[] hashmessage = hmacsha256.ComputeHash(dataBytes);
+        return BitConverter.ToString(hashmessage).Replace("-", "").ToLower();
     }
 }
