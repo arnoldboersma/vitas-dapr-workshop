@@ -26,7 +26,7 @@ apps:
       DOTNET_URLS: "http://*:12000"
       ASPNETCORE_ENVIRONMENT: "Development"
       DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER: "true"
-  # - appID: summarizer-worker
+  # - appID: summarizer-requests-processor
   #   appDirPath: ./src/worker/
   #   appPort: 13000
   #   command: ["dotnet", "watch"]

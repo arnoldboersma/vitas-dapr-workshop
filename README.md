@@ -4,7 +4,7 @@
 
 ## Prepare OpenAI
 - TODO Create Azure OpenAI resource
-- Open Azure AI studio 
+- Open Azure AI studio
 Create model with name: `aca-dapr-gpt-35-turbo-01`
 ![openaimodel](docs/images/openaimodel.png)
 - get endpoint and key
@@ -21,7 +21,7 @@ Open the app on port 11000, 12000 and 13000 the api has an swagger endpoint on /
 ![Alt text](docs/images/port.png)
 
 > If a port is missing, you can manually add the port to be forwarded.
-> 
+>
 > ![Alt text](docs/images/forewardport.png)
 
 ## Debug application
@@ -43,8 +43,11 @@ Output logs from the application and dapr are stored in each application in the 
 ### Zipkin
 ![Zipkin](docs/images/zipkin.png)
 
+## Deploy to azure
+[Deploy to Azure with the CLI](./deploy//containerapps/README.md)
+
 ## Troubleshoot
-- Sometimes the Redis container crashes, check the status of the docker container with 
+- Sometimes the Redis container crashes, check the status of the docker container with
 ```bash
 docker ps
 ```
