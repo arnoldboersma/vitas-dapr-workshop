@@ -73,8 +73,8 @@ resource containerapp 'Microsoft.App/containerApps@2022-03-01' = {
             }
           ], appSettings)
           resources: {
-            cpu: json('0.5')
-            memory: '1.0Gi'
+            cpu: json('0.75')
+            memory: '1.5Gi'
           }
         }
       ]
