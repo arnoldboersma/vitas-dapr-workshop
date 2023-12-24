@@ -2,8 +2,16 @@ using System.Text.Json;
 using Frontend;
 using Frontend.Components;
 using Frontend.Services;
+using Microsoft.ApplicationInsights.Extensibility;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApplicationInsightsTelemetry();
+
+builder.Services.Configure<TelemetryConfiguration>((o) =>
+{
+    o.TelemetryInitializers.Add(new AppInsightsTelemetryInitializer());
+});
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -21,7 +29,11 @@ builder.Services.AddDaprClient(client =>
     });
 });
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
+
+app.MapHealthChecks("/healthz");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

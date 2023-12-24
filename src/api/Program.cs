@@ -1,9 +1,18 @@
 
 using System.Text.Json;
+using Api;
 using Api.Models;
 using Api.Services;
+using Microsoft.ApplicationInsights.Extensibility;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApplicationInsightsTelemetry();
+
+builder.Services.Configure<TelemetryConfiguration>((o) =>
+{
+    o.TelemetryInitializers.Add(new AppInsightsTelemetryInitializer());
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -20,7 +29,11 @@ builder.Services.AddDaprClient(client =>
     });
 });
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
+
+app.MapHealthChecks("/healthz");
 
 if (app.Environment.IsDevelopment())
 {
