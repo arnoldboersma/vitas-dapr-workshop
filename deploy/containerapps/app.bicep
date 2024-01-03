@@ -136,7 +136,6 @@ module summarizer './modules/container-app.bicep' = {
     containerRegistryUserAssignedIdentityId: managedIdentity.id
     appSettings: workerSettings
     keyVaultUserAssignedIdentityId: keyVaultManagedIdentity.id
-    minReplicas: 1
   }
 }
 
