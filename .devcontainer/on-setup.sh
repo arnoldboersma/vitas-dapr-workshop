@@ -7,14 +7,14 @@ set_tools() {
     az extension add --name containerapp --upgrade
 }
 
-# set_ruby_for_docs_management() {
-#     sudo apt-get update && sudo apt-get install ruby-full build-essential zlib1g-dev -y
-#     echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc
-#     echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
-#     echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
-#     source ~/.bashrc
-#     sudo gem install jekyll bundler
-# }
+set_ruby_for_docs_management() {
+    sudo apt-get update && sudo apt-get install ruby-full build-essential zlib1g-dev -y
+    echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc
+    echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc
+    echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc
+    source ~/.bashrc
+    sudo gem install jekyll bundler
+}
 
 set_dapr_config() {
     dapr uninstall # clean if needed
@@ -29,7 +29,7 @@ set_dapr_config() {
 
 # Install tools
 set_tools
-# set_ruby_for_docs_management
+set_ruby_for_docs_management
 
 # Set dapr config
 set_dapr_config
