@@ -4,7 +4,7 @@ name: Deploy GitHub Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main", "arnold/try"]
+    branches: ["main"]
     paths:
       - 'docs/**'
 
