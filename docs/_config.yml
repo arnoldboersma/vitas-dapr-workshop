@@ -28,7 +28,9 @@ twitter_username: arnoldboersma
 github_username:  arnoldboersma
 
 # Build settings
-theme: just-the-docs
+#theme: just-the-docs
+remote_theme: pmarsceill/just-the-docs
+
 #color_scheme: lab
 
 gh_edit_link: true # show or hide edit this page link
