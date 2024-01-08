@@ -1,0 +1,16 @@
+﻿@using Frontend.Components.Shared
+@attribute [StreamRendering]
+@page "/"
+
+<PageTitle>Summarizer</PageTitle>
+
+<h1>Summarizer GPT</h1>
+
+<div style='padding-top:50px;'>
+    <FormMappingScope Name="store-checkout">
+        <NewSummaryRequest />
+    </FormMappingScope>
+</div>
+<div style='padding-top:50px;'>
+    <FetchSummaryRequests />
+</div>

@@ -33,14 +33,17 @@
       "vscode": {
         "settings": {},
         "extensions": [
-          "ms-azuretools.vscode-dapr",
-          "ms-dotnettools.csharp",
-          "ms-azuretools.vscode-docker",
-          "ms-python.python",
-          "GitHub.copilot",
-          "ms-azuretools.vscode-bicep",
-          "ms-dotnettools.csdevkit"
-      ]
+			"ms-azuretools.vscode-dapr",
+			"ms-dotnettools.csharp",
+			"ms-azuretools.vscode-docker",
+			"ms-python.python",
+			"GitHub.copilot",
+			"ms-azuretools.vscode-bicep",
+			"ms-dotnettools.csdevkit",
+			"mutantdino.resourcemonitor",
+			"humao.rest-client",
+			"cweijan.vscode-redis-client"
+		]
       }
     }
 

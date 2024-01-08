@@ -1,0 +1,52 @@
+﻿@using Frontend.Services
+
+@inject SummaryRequestService SummaryRequestService
+@inject AppSettings AppSettings
+@inject ILogger<FetchSummaryRequests> Logger
+
+
+<h4>All requests</h4>
+
+@if (requests == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Requestor</th>
+            <th>Url</th>
+            <th>Summary</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in requests)
+            {
+                <tr>
+                    <td>@request.Email</td>
+                    <td><a href="@request.Url">@request.Url</a></td>
+                    <td>@request.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+@functions {
+    private SummaryRequest[]? requests;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try {
+            this.requests = await SummaryRequestService.GetSummaryRequestsAsync();
+        }
+        catch(Exception ex)
+        {
+            Logger.LogError(ex, "Error loading summary requests");
+            this.requests = new SummaryRequest[0];
+        }
+    }
+}

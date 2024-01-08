@@ -1,0 +1,42 @@
+﻿@using Frontend.Services
+@using Frontend.Components.Shared;
+@using Microsoft.Extensions.Logging
+@using Microsoft.AspNetCore.Components.Forms
+
+@inject ILogger<NewSummaryRequest> Logger
+@inject SummaryRequestService SummaryRequestService
+
+<h4>Queue new request</h4>
+
+@if (submitted)
+{
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Success!</h4>
+        <p>Request has been queued.</p>
+    </div>
+}
+
+<EditForm Model="@newSummaryRequestPayload" method="post" OnValidSubmit="@Submit" FormName="newSummaryRequestPayload">
+    <DataAnnotationsValidator />
+    <InputText id="email" @bind-Value="newSummaryRequestPayload.Email" placeholder="Email" />
+
+    <InputText id="url" @bind-Value="newSummaryRequestPayload.Url" placeholder="Url" />
+
+    <button type="submit" class="btn btn-primary">
+     Queue
+    </button>
+    <ValidationSummary />
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    NewSummaryRequestPayload newSummaryRequestPayload { get; set; } = new();
+    bool submitted = false;
+
+    private async Task Submit()
+    {
+        submitted = true;
+        Logger.LogInformation("AddSummaryRequestAsync called: Form  is valid");
+        await SummaryRequestService.AddSummaryRequestAsync(newSummaryRequestPayload);
+    }
+}
