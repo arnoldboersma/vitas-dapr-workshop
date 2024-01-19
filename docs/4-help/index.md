@@ -1,6 +1,6 @@
 ---
 title: Help
-has_children: true
+has_children: false
 permalink: /lab4
 nav_order: 4
 ---
