@@ -3,6 +3,12 @@
 
 [Hands-on-guide :](https://arnoldboersma.github.io/vitas-dapr-workshop/)
 
+- TODO's
+
+  - Update this readme with prerequisites
+  - Update manual with steps (check this repo: https://github.com/reidav/aca-dapr-openai-workshop/tree/main/docs)
+  - Create starter branch and remove code.
+
 ## Prepare OpenAI
 - TODO Create Azure OpenAI resource
 - Open Azure AI studio
