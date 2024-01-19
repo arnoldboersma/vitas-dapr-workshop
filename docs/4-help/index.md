@@ -50,3 +50,5 @@ docker ps
 ```
 Or use the Docker plugin.
 ![container](images/container.png)
+
+- In case you're having the error message "Address already in use - bind", you can use the following command to free the address in use: `sudo lsof -i :8080` and then `sudo kill -9 <PID>`
