@@ -10,6 +10,8 @@ nav_order: 2
 
 You can run this application in a [GitHub Codespace](https://docs.github.com/en/codespaces/developing-in-codespaces/creating-a-codespace). This is useful for development and testing.
 
+>  If you cannot or want to run the workshop in a GitHub Codespace you can clone the repository, checkout the `lab` branch and open in your own DevContainer, check the vscode [documentation](https://code.visualstudio.com/docs/devcontainers/containers).
+
 1. Open the [vitas-dapr-workshop](https://github.com/arnoldboersma/vitas-dapr-workshop)
 
 2. Click the `Open in Codespaces` button
