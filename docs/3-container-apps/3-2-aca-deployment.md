@@ -37,7 +37,7 @@ If you want to learn more about the bicep templates, you can find them in the [b
 Within the `/deploy/containerapps` folder, you will find the following files:
 *  `core.bicep` - This is the main bicep template that will deploy all of the infrastructure resources (except for the container apps)
 *  `apps.bicep` - This is the bicep template that will deploy the container apps
-*  `parameters.jsonc` - This is the parameters file that will be used to deploy the infrastructure resources
+*  `core.bicepparam` - This is the parameters file that will be used to deploy the infrastructure resources
     > Make sure you have created this file before deploying the infrastructure if not, based on the sample provided
 * `/dapr/*.bicep` - These are the bicep templates that will deploy the Dapr components
 
@@ -52,11 +52,6 @@ Within the `/deploy/containerapps` folder, you will find the following files:
 1. Ensure you have access to an Azure subscription and the Azure CLI installed
    ```bash
    az extension add --name containerapp --upgrade
-   ```
-1. Clone this repository
-   ```bash
-   git clone https://github.com/arnoldboersma/vitas-dapr-workshop.git
-   cd vitas-dapr-workshop
    ```
 1. Create your own resourcegroup
 1. Modify core.bicepparam with the secrets
