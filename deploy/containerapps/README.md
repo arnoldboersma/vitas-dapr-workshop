@@ -17,10 +17,8 @@
    git clone https://github.com/arnoldboersma/vitas-dapr-workshop.git
    cd vitas-dapr-workshop
    ```
-
-Create your own resourcegroup 
-Modify core.bicepparam with the secrets
-
+1. Create your own resourcegroup
+1. Modify core.bicepparam with the secrets
 1. Deploy the infrastructure
    ```bash
    az deployment group create --resource-group <your resourcegroup name> --template-file ./deploy/containerapps/core.bicep --parameters ./deploy/containerapps/core.bicepparam
