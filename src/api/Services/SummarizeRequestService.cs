@@ -12,57 +12,30 @@ public class SummarizeRequestService(DaprClient daprClient, AppSettings appSetti
 
     internal async Task<SummaryRequest> CreateSummaryRequestAsync(NewSummarizeRequest newSummarizeRequest, CancellationToken ct = default)
     {
-        Dictionary<string, string> metadata = new() { { "contentType", "application/json" } };
-        var request = new SummaryRequest
+        return await Task.FromResult(new SummaryRequest
         {
             Id = Guid.NewGuid(),
-            Email = newSummarizeRequest.Email,
             Url = newSummarizeRequest.Url,
             UrlHashed = GetHashedUrl(newSummarizeRequest.Url),
-            Summary = newSummarizeRequest.Summary,
-        };
-
-        // Save State
-        await this.daprClient.SaveStateAsync(appSettings.StateStoreName, request.Id.ToString(), request, metadata: metadata, cancellationToken: ct);
-
-        return request;
+            Email = newSummarizeRequest.Email,
+            Summary = "",
+        });
     }
 
     internal async Task<List<SummaryRequest>> GetSummaryRequestsAsync(CancellationToken ct = default)
     {
-        var query = """
-        {
-            "page": {
-                "limit": 100
-            }
-        }
-        """;
-
-        // Get State
-        Dictionary<string, string> metadata = new() { { "contentType", "application/json" }, { "queryIndexName", this.appSettings.StateStoreQueryIndexName } };
-        var queryResult = await daprClient.QueryStateAsync<SummaryRequest>(appSettings.StateStoreName, query, cancellationToken: ct, metadata: metadata);
-        return queryResult.Results.Select(s => s.Data).ToList();
+        return await Task.FromResult(new List<SummaryRequest>{new() {
+            Id = Guid.NewGuid(),
+            Url = "",
+            UrlHashed = "",
+            Email = "",
+            Summary = "",
+        }});
     }
 
     internal async Task<SummaryRequest?> SearchSummaryRequestByUrlAsync(SearcRequest searcRequest, CancellationToken ct = default)
     {
-        var query = $$"""
-        {
-            "page": {
-                "limit": 100
-            },
-            "filter": {
-                "EQ": {
-                    "url_hashed": "{{GetHashedUrl(searcRequest.Url)}}"
-                }
-            }
-        }
-        """;
-
-        // Search Summary Request by URL
-        Dictionary<string, string> metadata = new() { { "contentType", "application/json" }, { "queryIndexName", this.appSettings.StateStoreQueryIndexName } };
-        var queryResult = await daprClient.QueryStateAsync<SummaryRequest>(appSettings.StateStoreName, query, cancellationToken: ct, metadata: metadata);
-        return queryResult.Results.Select(s => s.Data).FirstOrDefault();
+        return await Task.FromResult<SummaryRequest?>(null);
     }
 
     private static string GetHashedUrl(string url)
