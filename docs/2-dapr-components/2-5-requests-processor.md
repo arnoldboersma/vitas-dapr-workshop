@@ -52,6 +52,36 @@ As we will be having many dapr applications, let's leverage the [multi-run](http
 
 > Note: PubSub are already created, so we will be reusing the existing definition created before.
 
+## Create Secretstore yaml
+
+Let's create the yaml file for the Secretstore component.
+
+* Create a new file named `summarizer-pubsub` in the `/dapr/local/components` folder using local files as the secretstore component.
+
+<details markdown="block">
+  <summary>
+    Toggle solution
+  </summary>
+
+```yaml
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: summarizer-secretstore
+spec:
+  type: secretstores.local.file
+  version: v1
+  metadata:
+  - name: secretsFile
+    value: /workspaces/vitas-dapr-workshop/dapr/summarizer-secrets.json
+  - name: nestedSeparator
+    value: ":"
+```
+</details>
+
+> Note: The `name` is the name of the component. The `type` is the type of the component. The `version` is the version of the component. The `metadata` is the configuration of the component.
+
+
 ## Request Processor Overview
 
 1. Open the `app.py` file in the `/src/request-processor` folder, and notice the subscribe method being used as en entry point
@@ -61,7 +91,35 @@ As we will be having many dapr applications, let's leverage the [multi-run](http
 async def link_to_summarize(event : SummarizeRequestCloudEvent):
 ```
 
-2. Open the `request_handler.py` file in the `/src/request-processor` folder, and notice how the request is being processed .
+2. Open the `request_handler.py` file in the `/src/request-processor` folder, and notice how the request is being processed.
+
+3. Find method `__get_summary` and change the implementation to
+
+```python
+    async def __get_summary(self, url):
+        logging.info(f"URL: {url}")
+
+        client = AzureOpenAI(
+            api_key=self.settings.api_key,
+            api_version=self.settings.open_api_version,
+            azure_endpoint = self.settings.open_api_endpoint
+            )
+
+        try:
+            response = client.completions.create(model=self.settings.open_api_deployment_name,
+            prompt=f"Summarize the article {url} in english in less than two paragraphs without adding new information. When the summary seems too short to make at least one paragraph, answer that you can't summarize a text that is too short",
+            temperature=0.9,
+            max_tokens=200,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0.6)
+            logging.info(response.choices[0].text)
+            return response.choices[0].text
+
+        except Exception as e:
+            logging.error(e)
+            return "Unable to summarize this article."
+```
 
 ## Validate the overall processes
 
@@ -73,6 +131,8 @@ async def link_to_summarize(event : SummarizeRequestCloudEvent):
 2. Open the blazor application, create a new request using any email and link
 
 3. Check that the request is stored in redis and refresh the blazor page to see the summary of the request.
+
+4. BONUS: Change OpenAI parameters
 
 {: .no_toc }
 ## Congratulations !
