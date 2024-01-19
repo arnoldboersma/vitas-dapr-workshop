@@ -1,6 +1,7 @@
 # vitas-dapr-workshop
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/arnoldboersma/vitas-dapr-workshop)
 
+[Hands-on-guide :](https://arnoldboersma.github.io/vitas-dapr-workshop/)
 
 ## Prepare OpenAI
 - TODO Create Azure OpenAI resource
