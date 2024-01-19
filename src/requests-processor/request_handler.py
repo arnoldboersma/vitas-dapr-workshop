@@ -44,25 +44,4 @@ class SummarizeRequestHandler:
         return json.loads(resp.data.decode('utf-8')) if resp.status_code == 200 else None
 
     async def __get_summary(self, url):
-        logging.info(f"URL: {url}")
-
-        client = AzureOpenAI(
-            api_key=self.settings.api_key,
-            api_version=self.settings.open_api_version,
-            azure_endpoint = self.settings.open_api_endpoint
-            )
-
-        try:
-            response = client.completions.create(model=self.settings.open_api_deployment_name,
-            prompt=f"Summarize the article {url} in english in less than two paragraphs without adding new information. When the summary seems too short to make at least one paragraph, answer that you can't summarize a text that is too short",
-            temperature=0.9,
-            max_tokens=200,
-            top_p=1,
-            frequency_penalty=0,
-            presence_penalty=0.6)
-            logging.info(response.choices[0].text)
-            return response.choices[0].text
-
-        except Exception as e:
-            logging.error(e)
-            return "Unable to summarize this article."
+        return "TODO"

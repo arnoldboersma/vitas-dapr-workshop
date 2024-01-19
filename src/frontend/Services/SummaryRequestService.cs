@@ -11,22 +11,15 @@ public class SummaryRequestService(DaprClient daprClient, AppSettings settingsSe
     {
         CancellationTokenSource source = new CancellationTokenSource();
         CancellationToken cancellationToken = source.Token;
-
-        await this._daprClient.PublishEventAsync(
-            _settings.PubRequestName,
-            _settings.PubRequestTopic,
-            newSummaryRequest,
-            cancellationToken
-        );
     }
 
     public async Task<SummaryRequest[]> GetSummaryRequestsAsync()
     {
-        HttpRequestMessage? response = this._daprClient.CreateInvokeMethodRequest(
-            HttpMethod.Get,
-            _settings.requestsApiAppId,
-            _settings.requestsApiEndpoint
-        );
-        return await this._daprClient.InvokeMethodAsync<SummaryRequest[]>(response);
+        return await Task.FromResult(new SummaryRequest[]{new() {
+            Id = Guid.NewGuid().ToString(),
+            Url = "",
+            Email = "",
+            Summary = "",
+        }});
     }
 }
