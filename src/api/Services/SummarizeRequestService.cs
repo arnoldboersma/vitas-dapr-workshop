@@ -10,7 +10,7 @@ public class SummarizeRequestService(DaprClient daprClient, AppSettings appSetti
     private readonly DaprClient daprClient = daprClient ?? throw new ArgumentNullException(nameof(daprClient));
     private readonly AppSettings appSettings = appSettings ?? throw new ArgumentNullException(nameof(appSettings));
 
-    public async Task<SummaryRequest> CreateSummaryRequestAsync(NewSummarizeRequest newSummarizeRequest, CancellationToken ct = default)
+    internal async Task<SummaryRequest> CreateSummaryRequestAsync(NewSummarizeRequest newSummarizeRequest, CancellationToken ct = default)
     {
         Dictionary<string, string> metadata = new() { { "contentType", "application/json" } };
         var request = new SummaryRequest
@@ -22,12 +22,13 @@ public class SummarizeRequestService(DaprClient daprClient, AppSettings appSetti
             Summary = newSummarizeRequest.Summary,
         };
 
+        // Save State
         await this.daprClient.SaveStateAsync(appSettings.StateStoreName, request.Id.ToString(), request, metadata: metadata, cancellationToken: ct);
 
         return request;
     }
 
-    public async Task<List<SummaryRequest>> GetSummaryRequestsAsync(CancellationToken ct = default)
+    internal async Task<List<SummaryRequest>> GetSummaryRequestsAsync(CancellationToken ct = default)
     {
         var query = """
         {
@@ -37,6 +38,7 @@ public class SummarizeRequestService(DaprClient daprClient, AppSettings appSetti
         }
         """;
 
+        // Get State
         Dictionary<string, string> metadata = new() { { "contentType", "application/json" }, { "queryIndexName", this.appSettings.StateStoreQueryIndexName } };
         var queryResult = await daprClient.QueryStateAsync<SummaryRequest>(appSettings.StateStoreName, query, cancellationToken: ct, metadata: metadata);
         return queryResult.Results.Select(s => s.Data).ToList();
@@ -44,8 +46,6 @@ public class SummarizeRequestService(DaprClient daprClient, AppSettings appSetti
 
     internal async Task<SummaryRequest?> SearchSummaryRequestByUrlAsync(SearcRequest searcRequest, CancellationToken ct = default)
     {
-        Console.WriteLine(searcRequest);
-
         var query = $$"""
         {
             "page": {
@@ -59,8 +59,7 @@ public class SummarizeRequestService(DaprClient daprClient, AppSettings appSetti
         }
         """;
 
-        Console.WriteLine(query);
-
+        // Search Summary Request by URL
         Dictionary<string, string> metadata = new() { { "contentType", "application/json" }, { "queryIndexName", this.appSettings.StateStoreQueryIndexName } };
         var queryResult = await daprClient.QueryStateAsync<SummaryRequest>(appSettings.StateStoreName, query, cancellationToken: ct, metadata: metadata);
         return queryResult.Results.Select(s => s.Data).FirstOrDefault();

@@ -23,7 +23,7 @@
    ```bash
    az deployment group create --resource-group <your resourcegroup name> --template-file ./deploy/containerapps/core.bicep --parameters ./deploy/containerapps/core.bicepparam
    ```
-Give yourself acr push role for Container Registry in IAM
+1. Give yourself acr push role for Container Registry in IAM
 
 1. Log into Azure Container Registry
    You can get your registry name from your resource group in the Azure Portal
