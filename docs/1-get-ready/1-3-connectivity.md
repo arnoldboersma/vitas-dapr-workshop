@@ -28,7 +28,7 @@ az account show
 
 ## Setup secrets
 
-Actual repositery uses secrets files (ignored by gi)t to prevent secrets being pushed to the repository. We will need to reuse the sample secret files provided, duplicating and updating them with our own secrets.
+Actual repository uses secrets files (ignored by gi)t to prevent secrets being pushed to the repository. We will need to reuse the sample secret files provided, duplicating and updating them with our own secrets.
 
 1. Create a new file `/dapr/summarizer-secrets.json` based on the content of the file  `/dapr/summarizer-secrets-sample.json`. This file will be used by Dapr to inject secrets into the application. Feel free to fill-in the values with your own secrets.
 
